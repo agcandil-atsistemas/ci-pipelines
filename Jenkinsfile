@@ -8,7 +8,6 @@ node {
           analysisStatus = 'KO'
           error 'error in Checkout'
         }
-
         echo 'checkout status: ' + randomResult
     }
     stage('Build') {
@@ -17,7 +16,6 @@ node {
         analysisStatus = 'KO'
         error 'error in Checkout'
       }
-
       echo 'Build status: ' + analysisStatus
     }
     stage('Quality') {
@@ -26,7 +24,6 @@ node {
         analysisStatus = 'KO'
         error 'error in Checkout'
       }
-
       echo 'Quality status: ' + analysisStatus
     }
     stage('Publish in Nexus') {
@@ -35,7 +32,6 @@ node {
         analysisStatus = 'KO'
         error 'error in Checkout'
       }
-
       echo 'Nexus status: ' + analysisStatus
     }
     stage('Build Docker Image') {
@@ -44,7 +40,6 @@ node {
         analysisStatus = 'KO'
         error 'error in Checkout'
       }
-
       echo 'Build Docker status: ' + analysisStatus
     }
     stage('Publish Docker Image') {
@@ -53,7 +48,6 @@ node {
         analysisStatus = 'KO'
         error 'error in Checkout'
       }
-
       echo 'Publish Docker status: ' + analysisStatus
     }
     stage('Deploy') {
@@ -62,10 +56,9 @@ node {
         analysisStatus = 'KO'
         error 'error in Checkout'
       }
-
       echo 'Deploy status: ' + analysisStatus
     }
     stage('Clean') {
-      echo 'Clean status: OK' 
+      echo 'Clean status: OK'
     }
 }
