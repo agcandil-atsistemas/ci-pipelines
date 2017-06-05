@@ -8,7 +8,7 @@ node {
         if (randomResult == 11){
           analysisStatus = 'KO'
         }
-        def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"CI\",\"step\":\"Checkout\"}"
+        def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Checkout\"}"
         echo 'Json Result: ' + jsonResult
         sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
         if (analysisStatus == 'KO') {
@@ -20,64 +20,81 @@ node {
       def analysisStatus = 'OK'
       if (randomResult == 12){
         analysisStatus = 'KO'
-        sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"build"}\' | nc -4u -w1 localhost 12201'
-        error 'error in Checkout'
       }
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"build"}\' | nc -4u -w1 localhost 12201'
-      echo 'Build status: ' + analysisStatus
+      def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Build\"}"
+      echo 'Json Result: ' + jsonResult
+      sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+      if (analysisStatus == 'KO') {
+        error 'error in Build'
+      }
+      echo 'Build status: ' + randomResult
     }
     stage('Quality') {
       def analysisStatus = 'OK'
       if (randomResult == 13){
         analysisStatus = 'KO'
-        sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Quality"}\' | nc -4u -w1 localhost 12201'
-        error 'error in Checkout'
       }
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Quality"}\' | nc -4u -w1 localhost 12201'
-      echo 'Quality status: ' + analysisStatus
+      def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Quality\"}"
+      echo 'Json Result: ' + jsonResult
+      sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+      if (analysisStatus == 'KO') {
+      }
+      error 'error in Quality'
+      echo 'Quality status: ' + randomResult
     }
     stage('Publish in Nexus') {
       def analysisStatus = 'OK'
       if (randomResult == 14){
         analysisStatus = 'KO'
-        sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Nexus"}\' | nc -4u -w1 localhost 12201'
-        error 'error in Checkout'
       }
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Nexus"}\' | nc -4u -w1 localhost 12201'
-      echo 'Nexus status: ' + analysisStatus
+      def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Publish\"}"
+      echo 'Json Result: ' + jsonResult
+      sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+      if (analysisStatus == 'KO') {
+        error 'error in Publish'
+      }
+      echo 'Publish status: ' + randomResult
     }
     stage('Build Docker Image') {
       def analysisStatus = 'OK'
       if (randomResult == 15){
         analysisStatus = 'KO'
-        sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"BuildDocker"}\' | nc -4u -w1 localhost 12201'
-        error 'error in Checkout'
       }
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"BuildDocker"}\' | nc -4u -w1 localhost 12201'
-      echo 'Build Docker status: ' + analysisStatus
+      def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerBuild\"}"
+      echo 'Json Result: ' + jsonResult
+      sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+      if (analysisStatus == 'KO') {
+        error 'error in DockerBuild'
+      }
+      echo 'DockerBuild status: ' + randomResult
     }
     stage('Publish Docker Image') {
       def analysisStatus = 'OK'
       if (randomResult == 16){
         analysisStatus = 'KO'
-        sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"PublishDocker"}\' | nc -4u -w1 localhost 12201'
-        error 'error in Checkout'
       }
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"PublishDocker"}\' | nc -4u -w1 localhost 12201'
-      echo 'Publish Docker status: ' + analysisStatus
+      def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerPublish\"}"
+      echo 'Json Result: ' + jsonResult
+      if (analysisStatus == 'KO') {
+        error 'error in DockerPublish'
+        sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+      }
+      echo 'DockerPublish status: ' + randomResult
     }
     stage('Deploy') {
       def analysisStatus = 'OK'
       if (randomResult == 17){
         analysisStatus = 'KO'
-        sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Deploy"}\' | nc -4u -w1 localhost 12201'
-        error 'error in Checkout'
       }
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Deploy"}\' | nc -4u -w1 localhost 12201'
-      echo 'Deploy status: ' + analysisStatus
+      def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Deploy\"}"
+      echo 'Json Result: ' + jsonResult
+      sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+      if (analysisStatus == 'KO') {
+        error 'error in Deploy'
+      }
+      echo 'Deploy status: ' + randomResult
     }
     stage('Clean') {
-      sh 'echo -n \'{"full_message": "Build finished $analysisStatus", "buildNumber": $BUILD_NUMBER, "message": "Build finished $analysisStatus", "host":"jenkins", "facility":"test", "buildResult":"$analysisStatus", "type":"CI","step":"Clean"}\' | nc -4u -w1 localhost 12201'
       echo 'Clean status: OK'
     }
 }
