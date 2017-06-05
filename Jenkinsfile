@@ -4,6 +4,12 @@ def randomResult = new java.util.Random().nextInt(18)
 node {
     cleanWs notFailBuild: true
     stage('Checkout'){
+        echo 'Commit to relaunch job'
+        sh 'git checkout develop'
+        sh 'echo " " >> file.log'
+        sh 'git add -A'
+        sh 'git commit -m "AutoCommit"'
+        sh 'git push origin develop'
         def analysisStatus = 'OK'
         if (randomResult == 11){
           analysisStatus = 'KO'
@@ -96,11 +102,5 @@ node {
     }
     stage('Clean') {
       echo 'Clean status: OK'
-      echo 'Commit to relaunch job'
-      sh 'git checkout develop'
-      sh 'echo " " >> file.log'
-      sh 'git add -A'
-      sh 'git commit -m "AutoCommit"'
-      sh 'git push origin develop'
     }
 }
