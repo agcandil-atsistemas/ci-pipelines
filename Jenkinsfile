@@ -10,7 +10,7 @@ node {
         }
         def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"CI\",\"step\":\"Checkout\"}"
         echo 'Json Result: ' + jsonResult
-        sh "echo -n $jsonResult | nc -4u -w1 localhost 12201"
+        sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
         if (analysisStatus == 'KO') {
           error 'error in Checkout'
         }
