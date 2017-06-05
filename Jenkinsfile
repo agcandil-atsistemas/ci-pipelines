@@ -96,5 +96,11 @@ node {
     }
     stage('Clean') {
       echo 'Clean status: OK'
+      echo 'Commit to relaunch job'
+      sh 'git checkout develop'
+      sh 'echo " " >> file.log'
+      sh 'git add -A'
+      sh 'git commit -m "AutoCommit"'
+      sh 'git push origin develop'
     }
 }
