@@ -1,5 +1,6 @@
 
 def randomResult = new java.util.Random().nextInt(18)
+def analysisStatus = 'OK'
 
 node {
     cleanWs notFailBuild: true
@@ -12,7 +13,6 @@ node {
         sh 'git add -A'
         sh 'git commit -m "AutoCommit"'
         sh 'git push origin develop'
-        def analysisStatus = 'OK'
         if (randomResult == 11){
           analysisStatus = 'KO'
         }
@@ -25,7 +25,7 @@ node {
         echo 'checkout status: ' + randomResult
     }
     stage('Build') {
-      def analysisStatus = 'OK'
+      analysisStatus = 'OK'
       if (randomResult == 12){
         analysisStatus = 'KO'
       }
@@ -38,7 +38,7 @@ node {
       echo 'Build status: ' + randomResult
     }
     stage('Quality') {
-      def analysisStatus = 'OK'
+      analysisStatus = 'OK'
       if (randomResult == 13){
         analysisStatus = 'KO'
       }
@@ -51,7 +51,7 @@ node {
       echo 'Quality status: ' + randomResult
     }
     stage('Publish in Nexus') {
-      def analysisStatus = 'OK'
+      analysisStatus = 'OK'
       if (randomResult == 14){
         analysisStatus = 'KO'
       }
@@ -64,7 +64,7 @@ node {
       echo 'Publish status: ' + randomResult
     }
     stage('Build Docker Image') {
-      def analysisStatus = 'OK'
+      analysisStatus = 'OK'
       if (randomResult == 15){
         analysisStatus = 'KO'
       }
@@ -77,7 +77,7 @@ node {
       echo 'DockerBuild status: ' + randomResult
     }
     stage('Publish Docker Image') {
-      def analysisStatus = 'OK'
+      analysisStatus = 'OK'
       if (randomResult == 16){
         analysisStatus = 'KO'
       }
@@ -90,7 +90,7 @@ node {
       echo 'DockerPublish status: ' + randomResult
     }
     stage('Deploy') {
-      def analysisStatus = 'OK'
+      analysisStatus = 'OK'
       if (randomResult == 17){
         analysisStatus = 'KO'
       }
@@ -102,7 +102,12 @@ node {
       }
       echo 'Deploy status: ' + randomResult
     }
-    stage('Clean') {
-      echo 'Clean status: OK'
+    post {
+        always {
+            echo 'I will always say Hello again!'
+            def jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Summary\"}"
+            echo 'Json Result: ' + jsonResult
+            sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+        }
     }
 }
