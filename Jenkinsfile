@@ -1,13 +1,13 @@
 
 def randomResult = new java.util.Random().nextInt(18)
 def analysisStatus = 'OK'
-cleanWs notFailBuild: true
 
 pipeline {
     agent any
     stages {
       stage('Checkout'){
           steps {
+            cleanWs notFailBuild: true
             checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agcandil-atsistemas/ci-pipelines.git']]])
             sh 'pwd'
             echo 'Commit to relaunch job'
