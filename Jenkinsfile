@@ -1,5 +1,5 @@
 
-def randomResult = new java.util.Random().nextInt(18)
+def randomResult = new java.util.Random().nextInt(35)
 def analysisStatus = 'OK'
 def jsonResult = null
 
@@ -9,14 +9,14 @@ pipeline {
       stage('Checkout'){
           steps {
             cleanWs notFailBuild: true
-            #checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agcandil-atsistemas/ci-pipelines.git']]])
-            #sh 'pwd'
-            #echo 'Commit to relaunch job'
-            #sh 'git checkout develop'
-            #sh 'echo " " >> file.log'
-            #sh 'git add -A'
-            #sh 'git commit -m "AutoCommit"'
-            #sh 'git push origin develop'
+            checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agcandil-atsistemas/ci-pipelines.git']]])
+            sh 'pwd'
+            echo 'Commit to relaunch job'
+            sh 'git checkout develop'
+            sh 'echo " " >> file.log'
+            sh 'git add -A'
+            sh 'git commit -m "AutoCommit"'
+            sh 'git push origin develop'
             script {
               if (randomResult == 11){
                 analysisStatus = 'KO'
