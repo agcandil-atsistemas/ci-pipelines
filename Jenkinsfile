@@ -10,21 +10,11 @@ pipeline {
           steps {
             cleanWs notFailBuild: true
             checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agcandil-atsistemas/ci-pipelines.git']]])
-            sh 'pwd'
-            echo 'Commit to relaunch job'
-            sh 'git checkout develop'
-            sh 'echo " " >> file.log'
-            sh 'git add -A'
-            sh 'git commit -m "AutoCommit"'
-            sh 'git push origin develop'
             script {
               if (randomResult == 11){
                 analysisStatus = 'KO'
               }
-              jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Checkout\"}"
             }
-            echo 'Json Result: ' + jsonResult
-            sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
             script {
               if (analysisStatus == 'KO') {
                 error 'error in Checkout'
@@ -40,10 +30,7 @@ pipeline {
             if (randomResult == 12){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Build\"}"
           }
-          echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Build'
@@ -59,10 +46,7 @@ pipeline {
             if (randomResult == 13){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Quality\"}"
           }
-          echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Quality'
@@ -78,10 +62,7 @@ pipeline {
             if (randomResult == 14){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Publish\"}"
           }
-          echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Publish'
@@ -97,10 +78,7 @@ pipeline {
             if (randomResult == 15){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerBuild\"}"
           }
-          echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in DockerBuild'
@@ -116,10 +94,7 @@ pipeline {
             if (randomResult == 16){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerPublish\"}"
           }
-          echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in DockerPublish'
@@ -135,10 +110,7 @@ pipeline {
             if (randomResult == 17){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Deploy\"}"
           }
-          echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Deploy'
@@ -151,11 +123,6 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            script {
-              jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Summary\"}"
-            }
-            echo 'Json Result: ' + jsonResult
-            sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
-        }
+          }
     }
 }
