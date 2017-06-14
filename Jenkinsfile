@@ -1,5 +1,5 @@
 
-def randomResult = new java.util.Random().nextInt(35)
+def randomResult = new java.util.Random().nextInt(20)
 def analysisStatus = 'OK'
 def jsonResult = null
 
@@ -71,7 +71,7 @@ pipeline {
           echo 'Publish status: ' + randomResult
         }
       }
-      stage('Build Docker Image') {
+      stage('Deploy') {
         steps {
           script {
             analysisStatus = 'OK'
@@ -81,13 +81,13 @@ pipeline {
           }
           script {
             if (analysisStatus == 'KO') {
-              error 'error in DockerBuild'
+              error 'error in Deploy'
             }
           }
-          echo 'DockerBuild status: ' + randomResult
+          echo 'Deploy status: ' + randomResult
         }
       }
-      stage('Publish Docker Image') {
+      stage('ATDD') {
         steps {
           script {
             analysisStatus = 'OK'
@@ -97,26 +97,10 @@ pipeline {
           }
           script {
             if (analysisStatus == 'KO') {
-              error 'error in DockerPublish'
+              error 'error in ATDD'
             }
           }
-          echo 'DockerPublish status: ' + randomResult
-        }
-      }
-      stage('Deploy') {
-        steps {
-          script {
-            analysisStatus = 'OK'
-            if (randomResult == 17){
-              analysisStatus = 'KO'
-            }
-          }
-          script {
-            if (analysisStatus == 'KO') {
-              error 'error in Deploy'
-            }
-          }
-          echo 'Deploy status: ' + randomResult
+          echo 'ATDD status: ' + randomResult
         }
       }
     }
