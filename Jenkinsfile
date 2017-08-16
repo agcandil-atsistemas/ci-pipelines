@@ -1,5 +1,5 @@
 
-def randomResult = new java.util.Random().nextInt(20)
+def randomResult = new java.util.Random().nextInt(25)
 def analysisStatus = 'OK'
 def jsonResult = null
 
@@ -39,11 +39,27 @@ pipeline {
           echo 'Build status: ' + randomResult
         }
       }
-      stage('Quality') {
+      stage('Tests') {
         steps {
           script {
             analysisStatus = 'OK'
             if (randomResult == 13){
+              analysisStatus = 'KO'
+            }
+          }
+          script {
+            if (analysisStatus == 'KO') {
+              error 'error in Tests'
+            }
+          }
+          echo 'Tests status: ' + randomResult
+        }
+      }
+      stage('Quality') {
+        steps {
+          script {
+            analysisStatus = 'OK'
+            if (randomResult == 14){
               analysisStatus = 'KO'
             }
           }
@@ -59,7 +75,7 @@ pipeline {
         steps {
           script {
             analysisStatus = 'OK'
-            if (randomResult == 14){
+            if (randomResult == 15){
               analysisStatus = 'KO'
             }
           }
@@ -75,7 +91,7 @@ pipeline {
         steps {
           script {
             analysisStatus = 'OK'
-            if (randomResult == 15){
+            if (randomResult == 16){
               analysisStatus = 'KO'
             }
           }
@@ -91,7 +107,7 @@ pipeline {
         steps {
           script {
             analysisStatus = 'OK'
-            if (randomResult == 16){
+            if (randomResult == 17){
               analysisStatus = 'KO'
             }
           }
