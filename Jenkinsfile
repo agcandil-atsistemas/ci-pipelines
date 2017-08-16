@@ -39,7 +39,7 @@ pipeline {
           echo 'Build status: ' + randomResult
         }
       }
-      stage('Tests') {
+      stage('Test') {
         steps {
           script {
             analysisStatus = 'OK'
