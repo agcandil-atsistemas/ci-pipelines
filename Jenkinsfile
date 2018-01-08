@@ -7,10 +7,9 @@ pipeline {
     agent any
     stages {
       stage('Build') {
+        steps {
           echo 'branch name: $BRANCH_NAME'
-
           script {
-          steps {
             analysisStatus = 'OK'
             if (randomResult == 12){
               analysisStatus = 'KO'
