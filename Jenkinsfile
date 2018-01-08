@@ -1,7 +1,6 @@
 
 def randomResult = new java.util.Random().nextInt(35)
 def analysisStatus = 'OK'
-def jsonResult = null
 
 pipeline {
     agent any
@@ -11,15 +10,29 @@ pipeline {
           echo "branch name: $BRANCH_NAME"
           script {
             analysisStatus = 'OK'
-            if (randomResult == 12){
+            if (randomResult == 11){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Build\"}"
           }
-          echo 'Json Result: ' + jsonResult
           script {
             if (analysisStatus == 'KO') {
               error 'error in Build'
+            }
+          }
+          echo 'Build status: ' + randomResult
+        }
+      }
+      stage('UnitTest') {
+        steps {
+          script {
+            analysisStatus = 'OK'
+            if (randomResult == 12){
+              analysisStatus = 'KO'
+            }
+          }
+          script {
+            if (analysisStatus == 'KO') {
+              error 'error in UnitTest'
             }
           }
           echo 'Build status: ' + randomResult
@@ -32,9 +45,7 @@ pipeline {
             if (randomResult == 13){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Quality\"}"
           }
-          echo 'Json Result: ' + jsonResult
           script {
             if (analysisStatus == 'KO') {
               error 'error in Quality'
@@ -50,9 +61,7 @@ pipeline {
             if (randomResult == 14){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Publish\"}"
           }
-          echo 'Json Result: ' + jsonResult
           script {
             if (analysisStatus == 'KO') {
               error 'error in Publish'
@@ -68,9 +77,7 @@ pipeline {
             if (randomResult == 15){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerBuild\"}"
           }
-          echo 'Json Result: ' + jsonResult
           script {
             if (analysisStatus == 'KO') {
               error 'error in DockerBuild'
@@ -86,9 +93,7 @@ pipeline {
             if (randomResult == 16){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerPublish\"}"
           }
-          echo 'Json Result: ' + jsonResult
           script {
             if (analysisStatus == 'KO') {
               error 'error in DockerPublish'
@@ -104,12 +109,26 @@ pipeline {
             if (randomResult == 17){
               analysisStatus = 'KO'
             }
-            jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Deploy\"}"
           }
-          echo 'Json Result: ' + jsonResult
           script {
             if (analysisStatus == 'KO') {
               error 'error in Deploy'
+            }
+          }
+          echo 'Deploy status: ' + randomResult
+        }
+      }
+      stage('ATDD') {
+        steps {
+          script {
+            analysisStatus = 'OK'
+            if (randomResult == 18){
+              analysisStatus = 'KO'
+            }
+          }
+          script {
+            if (analysisStatus == 'KO') {
+              error 'error in ATDD'
             }
           }
           echo 'Deploy status: ' + randomResult
@@ -119,11 +138,6 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            script {
-              jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Summary\"}"
-            }
-            echo 'Json Result: ' + jsonResult
-
         }
     }
 }
