@@ -6,36 +6,11 @@ def jsonResult = null
 pipeline {
     agent any
     stages {
-      stage('Checkout'){
-          steps {
-            cleanWs notFailBuild: true
-            checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/agcandil-atsistemas/ci-pipelines.git']]])
-            sh 'pwd'
-            echo 'Commit to relaunch job'
-            sh 'git checkout develop'
-            sh 'echo " " >> file.log'
-            sh 'git add -A'
-            sh 'git commit -m "AutoCommit"'
-            sh 'git push origin develop'
-            script {
-              if (randomResult == 11){
-                analysisStatus = 'KO'
-              }
-              jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Checkout\"}"
-            }
-            echo 'Json Result: ' + jsonResult
-            sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
-            script {
-              if (analysisStatus == 'KO') {
-                error 'error in Checkout'
-              }
-            }
-            echo 'checkout status: ' + randomResult
-          }
-      }
       stage('Build') {
-        steps {
+          echo 'branch name: $BRANCH_NAME'
+
           script {
+          steps {
             analysisStatus = 'OK'
             if (randomResult == 12){
               analysisStatus = 'KO'
