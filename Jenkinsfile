@@ -8,7 +8,7 @@ pipeline {
     stages {
       stage('Build') {
         steps {
-          echo 'branch name: $BRANCH_NAME'
+          echo "branch name: $BRANCH_NAME"
           script {
             analysisStatus = 'OK'
             if (randomResult == 12){
