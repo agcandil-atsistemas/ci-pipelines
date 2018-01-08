@@ -17,7 +17,6 @@ pipeline {
             jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Build\"}"
           }
           echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Build'
@@ -36,7 +35,6 @@ pipeline {
             jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Quality\"}"
           }
           echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Quality'
@@ -55,7 +53,6 @@ pipeline {
             jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Publish\"}"
           }
           echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Publish'
@@ -74,7 +71,6 @@ pipeline {
             jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerBuild\"}"
           }
           echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in DockerBuild'
@@ -93,7 +89,6 @@ pipeline {
             jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"DockerPublish\"}"
           }
           echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in DockerPublish'
@@ -112,7 +107,6 @@ pipeline {
             jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Deploy\"}"
           }
           echo 'Json Result: ' + jsonResult
-          sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
           script {
             if (analysisStatus == 'KO') {
               error 'error in Deploy'
@@ -129,7 +123,7 @@ pipeline {
               jsonResult = "{\"full_message\": \"Build finished $analysisStatus\", \"buildNumber\": $BUILD_NUMBER, \"message\": \"Build finished $analysisStatus\", \"host\":\"jenkins\", \"facility\":\"test\", \"buildResult\":\"$analysisStatus\", \"type\":\"CI\",\"step\":\"Summary\"}"
             }
             echo 'Json Result: ' + jsonResult
-            sh "echo -n '$jsonResult' | nc -4u -w1 localhost 12201"
+
         }
     }
 }
