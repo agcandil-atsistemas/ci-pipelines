@@ -55,6 +55,11 @@ pipeline {
         }
       }
       stage('Publish in Nexus') {
+        when{
+          expression {
+              return env.BRANCH_NAME != "feature/*";
+          }
+        }
         steps {
           script {
             analysisStatus = 'OK'
@@ -71,6 +76,11 @@ pipeline {
         }
       }
       stage('Build Docker Image') {
+        when{
+          expression {
+              return env.BRANCH_NAME != "feature/*";
+          }
+        }
         steps {
           script {
             analysisStatus = 'OK'
@@ -87,6 +97,11 @@ pipeline {
         }
       }
       stage('Publish Docker Image') {
+        when{
+          expression {
+              return env.BRANCH_NAME != "feature/*";
+          }
+        }
         steps {
           script {
             analysisStatus = 'OK'
@@ -103,6 +118,11 @@ pipeline {
         }
       }
       stage('Deploy') {
+        when{
+          expression {
+              return env.BRANCH_NAME != "feature/*";
+          }
+        }
         steps {
           script {
             analysisStatus = 'OK'
@@ -119,6 +139,11 @@ pipeline {
         }
       }
       stage('ATDD') {
+        when{
+          expression {
+              return env.BRANCH_NAME != "feature/*";
+          }
+        }
         steps {
           script {
             analysisStatus = 'OK'
