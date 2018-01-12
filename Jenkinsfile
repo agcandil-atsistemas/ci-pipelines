@@ -57,7 +57,7 @@ pipeline {
       stage('Publish in Nexus') {
         when{
           expression {
-              return env.BRANCH_NAME.startsWith("feature/*")
+              return !env.BRANCH_NAME.startsWith("feature")
           }
         }
         steps {
@@ -78,7 +78,7 @@ pipeline {
       stage('Build Docker Image') {
         when{
           expression {
-              return env.BRANCH_NAME.startsWith("feature/*")
+              return !env.BRANCH_NAME.startsWith("feature")
           }
         }
         steps {
@@ -99,7 +99,7 @@ pipeline {
       stage('Publish Docker Image') {
         when{
           expression {
-              return env.BRANCH_NAME.startsWith("feature/*")
+              return !env.BRANCH_NAME.startsWith("feature")
           }
         }
         steps {
@@ -120,7 +120,7 @@ pipeline {
       stage('Deploy') {
         when{
           expression {
-              return env.BRANCH_NAME.startsWith("feature/*")
+              return !env.BRANCH_NAME.startsWith("feature")
           }
         }
         steps {
@@ -141,7 +141,7 @@ pipeline {
       stage('ATDD') {
         when{
           expression {
-              return env.BRANCH_NAME.startsWith("feature/*")
+              return !env.BRANCH_NAME.startsWith("feature")
           }
         }
         steps {
