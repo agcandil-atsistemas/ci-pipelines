@@ -40,6 +40,8 @@ pipeline {
       }
       stage('Quality') {
         steps {
+          input message: 'hello', submitter: 'agarcia'
+          input message: 'hello', submitter: 'sssss'
           script {
             analysisStatus = 'OK'
             if (randomResult == 13){
