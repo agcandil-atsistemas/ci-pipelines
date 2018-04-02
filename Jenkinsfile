@@ -7,6 +7,7 @@ pipeline {
     stages {
       stage('Build') {
         steps {
+          sh "cat README.md"
           echo "branch name: $BRANCH_NAME"
           script {
             analysisStatus = 'OK'
