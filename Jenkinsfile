@@ -3,9 +3,10 @@ def randomResult = new java.util.Random().nextInt(35)
 def analysisStatus = 'OK'
 
 pipeline {
-    agent any
+    agent none
     stages {
       stage('Build') {
+      agent any
         steps {
           echo "branch name: $BRANCH_NAME"
           script {
@@ -23,6 +24,7 @@ pipeline {
         }
       }
       stage('UnitTest') {
+        agent any
         steps {
           script {
             analysisStatus = 'OK'
@@ -40,6 +42,7 @@ pipeline {
       }
       stage('Quality') {
         steps {
+          input message: 'hello', submitter: 'agarcia,ssss'
           script {
             analysisStatus = 'OK'
             if (randomResult == 13){
