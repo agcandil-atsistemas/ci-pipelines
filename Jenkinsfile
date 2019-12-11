@@ -1,6 +1,7 @@
 
 def randomResult = new java.util.Random().nextInt(35)
 def analysisStatus = 'OK'
+def stageERROR = ''
 
 pipeline {
     agent any
@@ -12,6 +13,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 11){
               analysisStatus = 'KO'
+              stageERROR = 'Build'
             }
           }
           script {
@@ -28,6 +30,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 12){
               analysisStatus = 'KO'
+              stageERROR = 'UnitTest'
             }
           }
           script {
@@ -44,6 +47,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 13){
               analysisStatus = 'KO'
+              stageERROR = 'Quality'
             }
           }
           script {
@@ -65,6 +69,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 14){
               analysisStatus = 'KO'
+              stageERROR = 'Nexus'
             }
           }
           script {
@@ -86,6 +91,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 15){
               analysisStatus = 'KO'
+              stageERROR = 'DockerBuild'
             }
           }
           script {
@@ -107,6 +113,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 16){
               analysisStatus = 'KO'
+              stageERROR = 'DockerPublish'
             }
           }
           script {
@@ -128,6 +135,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 17){
               analysisStatus = 'KO'
+              stageERROR = 'Deploy'
             }
           }
           script {
@@ -149,6 +157,7 @@ pipeline {
             analysisStatus = 'OK'
             if (randomResult == 18){
               analysisStatus = 'KO'
+              stageERROR = 'ATDD'
             }
           }
           script {
@@ -163,6 +172,16 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
+            sh label: 'helloworld', script: '''cat << \'EOF\' > json.json
+              {
+                "result": "${env.RESULT}",
+                "stageError":  "${stageERROR}",
+                "buildCauses": "${currentBuild.getBuildCauses()}",
+                "timeInMillis": "${currentBuild.timeInMillis}",
+                "startTimeInMillis": "${currentBuild.startTimeInMillis}"
+              }
+              EOF'''
+              sh label: 'helloworld', script: 'cat  json.json'
         }
     }
 }
